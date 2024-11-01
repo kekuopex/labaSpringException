@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Select Continent</title></head>
+<body>
+<form action="#" th:action="@{/countries/list}" method="post">
+    <label for="continent">Select Continent:</label>
+    <select name="continent" id="continent">
+        <option th:each="continent : ${continents}" th:value="${continent}" th:text="${continent}">Continent</option>
+    </select>
+    <button type="submit">Show Countries</button>
+</form>
+</body>
+</html>

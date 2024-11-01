@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Country List</title></head>
+<body>
+<h1>Country List</h1>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Continent</th>
+    </tr>
+    <tr th:each="country : ${countries}">
+        <td th:text="${country.name}">Name</td>
+        <td th:text="${country.continent}">Continent</td>
+    </tr>
+</table>
+</body>
+</html>
