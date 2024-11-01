@@ -14,7 +14,7 @@
     Реализация дополнительных механизмов Spring MVC.
 
 Структура класса Country
-
+```
 public class Country {
     private String code;
     private String name;
@@ -24,11 +24,11 @@ public class Country {
 
     //constructor, getters and setters are here
 }
-
+```
 NB В классе должен присутствовать полный конструктор
 
 Интерфейс для поиска стран ICountryRepository
-
+```
 public interface ICountryRepository {
     Country findByCode(String code);
     List<Country> findByContinent(String continent);    
@@ -37,13 +37,13 @@ public interface ICountryRepository {
     Country findByName(String name);
     List<String> getContinents();    
 }
-
+```
 1. Структура поиска
 
 Получение списка континентов, стран и информации о странах осуществляется с помощью класса CountryRepository. В нем содержатся данные по странам и набор методов для запросов. Данный класс должен быть объявлен как репозиторий или соответствующий bean прописан в файле applicationContext. Обратите внимание, что методы класса требуют дополнительной реализации.
 
 Для поиска стран потребуется реализация объекта поиска и формы поиска, отображающей этот объект.
-
+```
 public class CountrySearch {
     private String name;
     private String continent;
@@ -51,7 +51,7 @@ public class CountrySearch {
 
     //constructors and some methods are here
 }
-
+```
 Поиск может осуществляться по следующим сценариям:
 
     По континенту (список выбора).
@@ -62,12 +62,12 @@ public class CountrySearch {
 Формирование списка стран
 
 Для отображения списка стран можно воспользоваться циклом на html-странице:
-
+```
 <tr th:each="country : ${countries}">
   <td th:text="${country.name}">Name</td>
   <td th:text="${country.continent}">Continent</td>                    
 </tr>	
-
+```
 Разумеется, для этого в модель должен быть передан список стран в коллекции countries. Также в этом цикле требуется реализация кода по формированию ссылок для get-запроса (параметр запроса или часть URI)
 2. Обработка параметров get-запроса
 
@@ -76,25 +76,25 @@ public class CountrySearch {
 http://localhost:8080/world/country/PRY
 
 Для получения данных потребуется следующий заголовок метода в контроллере:
-
+```
 @RequestMapping(value="/country/{code}")
 public String getCountry(Model model, @PathVariable("code") String code){
  //code here
 }
-
+```
 3. Проверка ошибок
 
 Реализуйте в проекте проверку двух типов ошибок: переход по несуществующей странице и переход к стране с несуществующим кодом. 
 Пользователю должны выдаваться различные сообщения по этим ошибкам. Для описания второго случае реализуйте собственный класс с описанием исключения:
 
- 
+ ```
 public class CounrtyNotFoundException extends RuntimeException{
     public CounrtyNotFoundException(String errorMessage){
         super(errorMessage);
     }
     // Another class constructor can be located here 
 }
-
+```
 Добавьте класс для перехвата исключений, возникающих в программном коде проекта. Для этого нужно написать класс, с аннотацией @ControllerAdvace. 
 Метод этого класса должен обрабатывать ошибку с отсутствующей страной и формировать соответствующее представление.
 
